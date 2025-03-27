@@ -1,0 +1,24 @@
+{
+  "name": "string-calculator",
+  "version": "1.0.0",
+  "description": "This String Calculator app provides a method to sum numbers from a string, supporting multiple delimiters, new lines, and handling an unlimited number of inputs.",
+  "main": "index.ts",
+  "repository": "git@github.com:sanjibroy360/String-Calculator-TDD.git",
+  "keywords": [
+    "String Calculator",
+    "Test Driven Development",
+    "TDD"
+  ],
+  "author": "sanjibroy360",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.0",
+    "typescript": "^5.8.2"
+  }
+}
