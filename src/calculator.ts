@@ -16,7 +16,9 @@ class Calculator {
     if (this.numbers.length === 1) {
       return this.numbers[0];
     }
-    return 0;
+
+    const sum = this.numbers.reduce((sum, number) => sum + number, 0);
+    return sum;
   }
 }
 

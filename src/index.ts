@@ -22,7 +22,19 @@ class StringCalculator extends Calculator {
     if (inputString.length === 1 && !isNaN(Number(inputString))) {
       return [Number(inputString)];
     }
-    return [];
+
+    const numbers: Numbers = inputString
+      .split(",")
+      .reduce((numbersArray: Numbers, currentNumber: string): Numbers => {
+        const numericValue: number = Number(currentNumber);
+
+        if (!isNaN(numericValue)) {
+          numbersArray.push(numericValue);
+        }
+        return numbersArray;
+      }, []);
+
+    return numbers;
   }
 }
 
