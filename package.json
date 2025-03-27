@@ -13,7 +13,10 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "watch": "tsc --watch",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:watchAll": "jest --watchAll"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

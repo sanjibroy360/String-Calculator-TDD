@@ -1,5 +1,6 @@
-import Calculator from "./calculator";
-import { InputType } from "./types";
+import { InputType } from "@types";
+import Calculator from "@calculator";
+
 
 class StringCalculator extends Calculator {
   constructor() {

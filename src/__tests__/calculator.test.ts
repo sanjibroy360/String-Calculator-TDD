@@ -1,4 +1,4 @@
-import Calculator from "../calculator";
+import Calculator from "@calculator";
 
 describe("Calculator", () => {
   test("should return 0 if no numbers are present", () => {

@@ -1,4 +1,4 @@
-import { Numbers } from "./types";
+import { Numbers } from "@types";
 
 class Calculator {
   protected numbers: Numbers = [];
