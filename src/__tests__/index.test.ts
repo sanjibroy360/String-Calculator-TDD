@@ -10,7 +10,11 @@ describe("StringCalculator", () => {
 
   describe("Adding numbers from a string", () => {
     test("should return 0 for empty string", () => {
-      expect(add("")).toEqual(0);
+      expect(add("")).toBe(0);
+    });
+
+    test("should return the same number for a string containing only one number", () => {
+      expect(add("1")).toBe(1);
     });
   });
 });
