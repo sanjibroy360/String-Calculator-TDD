@@ -16,5 +16,16 @@ describe("StringCalculator", () => {
     test("should return the same number for a string containing only one number", () => {
       expect(add("1")).toBe(1);
     });
+
+    test("should return the sum of two comma-separated numbers", () => {
+      expect(add("1,2")).toBe(3);
+    });
+
+    test("should return the sum of any amount of comma-separated numbers", () => {
+      const numbers = Array.from({ length: 100 }, (_, index) => index + 1);
+      const expectedSum = numbers.reduce((sum, num) => sum + num, 0);
+      const inputString = numbers.join(",");
+      expect(add(inputString)).toBe(expectedSum);
+    });
   });
 });
