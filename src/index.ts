@@ -18,6 +18,10 @@ class StringCalculator extends Calculator {
     if (!inputString) {
       return [];
     }
+
+    if (inputString.length === 1 && !isNaN(Number(inputString))) {
+      return [Number(inputString)];
+    }
     return [];
   }
 }

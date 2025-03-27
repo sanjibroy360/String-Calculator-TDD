@@ -12,6 +12,10 @@ class Calculator {
     if (!this.numbers.length) {
       return 0;
     }
+
+    if (this.numbers.length === 1) {
+      return this.numbers[0];
+    }
     return 0;
   }
 }
