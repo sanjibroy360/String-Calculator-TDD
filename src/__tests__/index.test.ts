@@ -27,5 +27,9 @@ describe("StringCalculator", () => {
       const inputString = numbers.join(",");
       expect(add(inputString)).toBe(expectedSum);
     });
+
+    test("should also handle new lines between numbers as delimiter", () => {
+      expect(add("1\n2,3")).toBe(6);
+    });
   });
 });
