@@ -2,10 +2,13 @@ import { InputType, Numbers, ResultType } from "@types";
 import Calculator from "@calculator";
 
 class StringCalculator extends Calculator {
+  private defaultDelimiter: string;
   constructor() {
     super();
+    this.defaultDelimiter = ",";
     this.add = this.add.bind(this);
     this.extractNumbersFromInput = this.extractNumbersFromInput.bind(this);
+    this.parseInputString = this.parseInputString.bind(this);
   }
 
   add(inputString: InputType = ""): ResultType {
@@ -23,7 +26,9 @@ class StringCalculator extends Calculator {
       return [Number(inputString)];
     }
 
-    const numbers: Numbers = inputString
+    const parsedInputString: InputType = this.parseInputString(inputString);
+
+    const numbers: Numbers = parsedInputString
       .split(",")
       .reduce((numbersArray: Numbers, currentNumber: string): Numbers => {
         const numericValue: number = Number(currentNumber);
@@ -35,6 +40,11 @@ class StringCalculator extends Calculator {
       }, []);
 
     return numbers;
+  }
+
+  parseInputString(inputString: InputType): InputType {
+    const parsedString = inputString.replace(/\n/g, this.defaultDelimiter);
+    return parsedString;
   }
 }
 
