@@ -35,5 +35,22 @@ describe("StringCalculator", () => {
     test("should support custom delimiter", () => {
       expect(add("//;\n1;2")).toBe(3);
     });
+
+    test("should throw an exception for a single negative number input", () => {
+      expect(() => add("-9")).toThrow("negative numbers not allowed -9");
+      expect(() => add("1,2,3,-4")).toThrow("negative numbers not allowed -4");
+      expect(() => add("//;\n1;-2;3;4")).toThrow(
+        "negative numbers not allowed -2"
+      );
+    });
+
+    test("should throw an exception for multiple negative numbers input", () => {
+      expect(() => add("1,-2,3,-4,5,-6")).toThrow(
+        "negative numbers not allowed -2,-4,-6"
+      );
+      expect(() => add("//;\n1;-2;3;-4;5;6")).toThrow(
+        "negative numbers not allowed -2,-4"
+      );
+    });
   });
 });
