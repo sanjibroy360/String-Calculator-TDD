@@ -43,7 +43,32 @@ class StringCalculator extends Calculator {
   }
 
   parseInputString(inputString: InputType): InputType {
-    const parsedString = inputString.replace(/\n/g, this.defaultDelimiter);
+    const hasCustomDelimiterSpec =
+      inputString.startsWith("//") && inputString.includes("\n");
+
+    let delimiters: string = "";
+
+    if (hasCustomDelimiterSpec) {
+      const delimiterEndIndex: number = inputString.indexOf("\n");
+      const customDelimiter: string = inputString.slice(0, delimiterEndIndex);
+      inputString = inputString.slice(delimiterEndIndex + 1).trim();
+      delimiters += customDelimiter;
+    }
+
+    if (inputString.includes("\n")) {
+      delimiters += "\n";
+    }
+
+    const parsedString: string = inputString
+      .split("")
+      .reduce((parsedStr: string, char: string): string => {
+        if (delimiters.includes(char)) {
+          parsedStr += this.defaultDelimiter;
+        } else {
+          parsedStr += char;
+        }
+        return parsedStr;
+      }, "");
     return parsedString;
   }
 }
