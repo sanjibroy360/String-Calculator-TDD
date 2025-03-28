@@ -14,6 +14,7 @@ class StringCalculator extends Calculator {
   add(inputString: InputType = ""): ResultType {
     const numbers = this.extractNumbersFromInput(inputString.trim());
     this.numbers = numbers;
+    this.allowOnlyPositiveNumbers = true;
     return super.add();
   }
 
