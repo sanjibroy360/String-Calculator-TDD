@@ -15,6 +15,7 @@ class StringCalculator extends Calculator {
     const numbers = this.extractNumbersFromInput(inputString.trim());
     this.numbers = numbers;
     this.allowOnlyPositiveNumbers = true;
+    this.maxAllowedNumber = 1000;
     return super.add();
   }
 
