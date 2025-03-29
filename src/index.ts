@@ -12,11 +12,15 @@ class StringCalculator extends Calculator {
     this.getDelimiters = this.getDelimiters.bind(this);
   }
 
-  add(inputString: InputType = ""): ResultType {
-    const numbers = this.extractNumbersFromInput(inputString.trim());
+  add(
+    inputString: InputType = "",
+    allowOnlyPositiveNumbers: boolean = true,
+    maxAllowedNumber: number = 1000
+  ): ResultType {
+    const numbers: Numbers = this.extractNumbersFromInput(inputString.trim());
     this.numbers = numbers;
-    this.allowOnlyPositiveNumbers = true;
-    this.maxAllowedNumber = 1000;
+    this.allowOnlyPositiveNumbers = allowOnlyPositiveNumbers;
+    this.maxAllowedNumber = maxAllowedNumber;
     return super.add();
   }
 
