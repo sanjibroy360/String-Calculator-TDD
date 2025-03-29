@@ -21,6 +21,9 @@ The calculator is implemented using two classes:
 ### Test-Driven Development (TDD) Approach  
 I followed the TDD methodology by first writing failing test cases before implementing the functionality. Each feature is built incrementally, ensuring all tests passed before moving to the next. I have completed all the steps of [TDD Kata 1](https://osherove.com/tdd-kata-1/).
 
+<img width="418" alt="Screenshot 2025-03-29 at 8 06 27 AM" src="https://github.com/user-attachments/assets/b3ca52ad-3577-4435-aaae-1e78846b556d" />
+
+
 
 ## Usage
 
