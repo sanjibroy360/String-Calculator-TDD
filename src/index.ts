@@ -9,6 +9,7 @@ class StringCalculator extends Calculator {
     this.add = this.add.bind(this);
     this.extractNumbersFromInput = this.extractNumbersFromInput.bind(this);
     this.parseInputString = this.parseInputString.bind(this);
+    this.getDelimiters = this.getDelimiters.bind(this);
   }
 
   add(inputString: InputType = ""): ResultType {
@@ -19,7 +20,7 @@ class StringCalculator extends Calculator {
     return super.add();
   }
 
-  extractNumbersFromInput(inputString: InputType = ""): Numbers {
+  private extractNumbersFromInput(inputString: InputType = ""): Numbers {
     if (!inputString) {
       return [];
     }
@@ -31,7 +32,7 @@ class StringCalculator extends Calculator {
     const parsedInputString: InputType = this.parseInputString(inputString);
 
     const numbers: Numbers = parsedInputString
-      .split(",")
+      .split(this.defaultDelimiter)
       .reduce((numbersArray: Numbers, currentNumber: string): Numbers => {
         const numericValue: number = Number(currentNumber);
 
@@ -44,34 +45,82 @@ class StringCalculator extends Calculator {
     return numbers;
   }
 
-  parseInputString(inputString: InputType): InputType {
+  private parseInputString(inputString: InputType): InputType {
     const hasCustomDelimiterSpec =
       inputString.startsWith("//") && inputString.includes("\n");
 
-    let delimiters: string = "";
+    if (!hasCustomDelimiterSpec && !inputString.includes("\n")) {
+      return inputString.trim();
+    }
+
+    let delimiters: string[] = [];
+    let parsedString: InputType = "";
 
     if (hasCustomDelimiterSpec) {
       const delimiterEndIndex: number = inputString.indexOf("\n");
-      const customDelimiter: string = inputString.slice(0, delimiterEndIndex);
+      const customDelimiterString: string = inputString.slice(2, delimiterEndIndex);
+      delimiters = this.getDelimiters(customDelimiterString);
       inputString = inputString.slice(delimiterEndIndex + 1).trim();
-      delimiters += customDelimiter;
     }
 
     if (inputString.includes("\n")) {
-      delimiters += "\n";
+      delimiters.push("\n");
     }
 
-    const parsedString: string = inputString
-      .split("")
-      .reduce((parsedStr: string, char: string): string => {
-        if (delimiters.includes(char)) {
-          parsedStr += this.defaultDelimiter;
-        } else {
-          parsedStr += char;
-        }
-        return parsedStr;
-      }, "");
+    if (delimiters.length > 0) {
+      const delimiterPattern = delimiters.reduce(
+        (pattern: string, d: string): string => pattern + `\\${d}`,
+        ""
+      );
+      const regexPattern = new RegExp(`[${delimiterPattern}]+`);
+      parsedString = inputString
+        .split(regexPattern)
+        .join(this.defaultDelimiter);
+    }
+
     return parsedString;
+  }
+
+  private getDelimiters(delimiter: string): string[] {
+    const hasisDelimiterBlock =
+      delimiter.includes("[") && delimiter.includes("]");
+
+    if (!hasisDelimiterBlock) {
+      return [delimiter];
+    }
+
+    let delimiters: string[] = [];
+    let currentDelimiter = "";
+    let isInDelimiterBlock = false;
+    let currentIndex = 0;
+
+    delimiters = delimiter
+      .split("")
+      .reduce((delimiterList: string[], character: string) => {
+        if (character === "[") {
+          isInDelimiterBlock = true;
+          return delimiterList;
+        }
+
+        if (character === "]") {
+          isInDelimiterBlock = false;
+          delimiterList.push(currentDelimiter);
+          currentDelimiter = "";
+          return delimiterList;
+        }
+
+        if (isInDelimiterBlock) {
+          currentDelimiter += character;
+        } else {
+          delimiterList[currentIndex] = delimiterList[currentIndex]
+            ? delimiterList[currentIndex] + character
+            : character;
+        }
+
+        return delimiterList;
+      }, []);
+
+    return delimiters;
   }
 }
 
