@@ -53,15 +53,24 @@ describe("StringCalculator", () => {
       );
     });
 
-    test("should ignore numbers bigger than 1000",()=> {
+    test("should ignore numbers bigger than 1000", () => {
       expect(add("1001")).toBe(0);
       expect(add("1, 1001,2")).toBe(3);
       expect(add("//;\n1001;2")).toBe(2);
-    })
+    });
 
-    test("should support custom delimiter of any length", ()=> {
+    test("should support custom delimiter of any length", () => {
       expect(add("//[***]\n1***2***3")).toBe(6);
-      expect(add("//$$\n1$$2$$3$$4")).toBe(10);
+    });
+
+    test("should support multiple single-character delimiters", () => {
+      expect(add("//[*][%]\n1*2%3")).toBe(6);
+      expect(add("//$[*][%]\n1*2%3$4")).toBe(10);
+    });
+
+    test("should support multiple delimiters longer than one character", () => {
+      expect(add("//[***][%%]\n1***2%%3")).toBe(6);
+      expect(add("//$$$[****][%%]\n1****2%%3$$$4")).toBe(10);
     });
   });
 });
